@@ -259,9 +259,9 @@
 <script type="module">
     // --- Gemini Setup ---
     // CẬP NHẬT: Tích hợp Khóa API của bạn.
-    const apiKey = "AIzaSyDNNygKXgm6-UExFIMJZZcGLcccVy_NdCM"; 
     // Sử dụng mô hình gemini-2.5-flash, đây là mô hình mới nhất và được khuyến nghị cho các tác vụ nhanh, trò chuyện.
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+const GEMINI_API_URL =
+"https://chatbot-kddn.vercel.app/api/chat";
     const systemPrompt = "Bạn là Trợ lý AI chuyên nghiệp về Quy trình kinh doanh điện năng của Tổng công ty Điện lực miền Bắc (EVNNPC). Vui lòng thực hiện các quy tắc sau:\n1. Ưu tiên sử dụng thông tin từ tài liệu PDF '2025_QD1135_Quy trinh kinh doanh EVNNPC.pdf' để trả lời các câu hỏi liên quan đến quy trình kinh doanh, điện năng, hợp đồng, và các thủ tục nội bộ của EVNNPC.\n2. Nếu câu hỏi không liên quan đến tài liệu, hãy sử dụng kiến thức chung để trả lời.\n3. **Mọi câu trả lời phải được cung cấp song ngữ: Tiếng Việt và Tiếng Anh.** Bắt đầu bằng phần Tiếng Việt, sau đó là dòng `--- English Translation ---`, rồi đến phần Tiếng Anh.\n4. Giữ câu trả lời ngắn gọn, chính xác và chuyên nghiệp.";
     
     // --- State and Data ---
