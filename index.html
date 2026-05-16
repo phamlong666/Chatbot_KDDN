@@ -647,20 +647,48 @@ const GEMINI_API_URL =
     }
     
     // CẬP NHẬT: Hàm đọc văn bản (Text-to-Speech)
-    window.speakText = function(lang, textId) {
-        if ('speechSynthesis' in window) {
-            let text = document.getElementById(textId).innerText;
-	    text = cleanMarkdown(text);
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang;
-            
-            // Dừng các lần đọc trước đó
-            window.speechSynthesis.cancel();
+    // CẬP NHẬT: Hàm đọc văn bản (Text-to-Speech)
+window.speakText = function(lang, textId) {
+
+    if ('speechSynthesis' in window) {
+
+        let text = document.getElementById(textId).innerText;
+
+        text = cleanMarkdown(text);
+
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        utterance.lang = lang;
+
+        // Dừng các lần đọc trước đó
+        window.speechSynthesis.cancel();
+
+        // Delay nhỏ để ổn định engine TTS
+        setTimeout(() => {
+
             window.speechSynthesis.speak(utterance);
-        } else {
-            alert("Trình duyệt của bạn không hỗ trợ tính năng này.");
-        }
+
+        }, 100);
+
+    } else {
+
+        alert("Trình duyệt của bạn không hỗ trợ tính năng này.");
+
     }
+
+}
+
+
+// Hàm dừng đọc
+window.stopSpeech = function() {
+
+    if ('speechSynthesis' in window) {
+
+        window.speechSynthesis.cancel();
+
+    }
+
+}
 
     window.sendMessage = async function() {
         const inputElement = document.getElementById('user-input');
@@ -704,18 +732,44 @@ const GEMINI_API_URL =
             const englishText = parts[1].trim();
             
             formattedResponse = `
-                <h4>EVNNPC AI Assistant (Song ngữ)</h4>
-                <div class="response-lang-block">
-                    <strong>Tiếng Việt</strong>
-                    <button class="tts-button" onclick="speakText('vi-VN', '${textIdBase}-vi')"><i class="fas fa-volume-up"></i></button>
-                    <p id="${textIdBase}-vi">${vietnameseText}</p>
-                </div>
-                <div class="response-lang-block">
-                    <strong>English</strong>
-                    <button class="tts-button" onclick="speakText('en-US', '${textIdBase}-en')"><i class="fas fa-volume-up"></i></button>
-                    <p id="${textIdBase}-en">${englishText}</p>
-                </div>
-            `;
+    <h4>EVNNPC AI Assistant (Song ngữ)</h4>
+
+    <div class="response-lang-block">
+
+        <strong>Tiếng Việt</strong>
+
+        <button class="tts-button"
+            onclick="speakText('vi-VN', '${textIdBase}-vi')">
+            <i class="fas fa-volume-up"></i>
+        </button>
+
+        <button class="tts-button"
+            onclick="stopSpeech()">
+            <i class="fas fa-stop"></i>
+        </button>
+
+        <p id="${textIdBase}-vi">${vietnameseText}</p>
+
+    </div>
+
+    <div class="response-lang-block">
+
+        <strong>English</strong>
+
+        <button class="tts-button"
+            onclick="speakText('en-US', '${textIdBase}-en')">
+            <i class="fas fa-volume-up"></i>
+        </button>
+
+        <button class="tts-button"
+            onclick="stopSpeech()">
+            <i class="fas fa-stop"></i>
+        </button>
+
+        <p id="${textIdBase}-en">${englishText}</p>
+
+    </div>
+`;
         } else {
             // Trường hợp API không trả về đúng định dạng
             formattedResponse = `
